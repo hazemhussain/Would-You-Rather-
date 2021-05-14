@@ -8,7 +8,7 @@ import NavBar from './NavBar'
 
  class Leaderboard extends Component {
     render() {
-        const usersDetail = this.props.users.sort( (a, b) => b.totalScore - a.totalScore)
+        const usersDetail = this.props.users.sort( (a, b) => b.total - a.total)
         return (
             <Container>
             <NavBar/>

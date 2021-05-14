@@ -32,7 +32,7 @@ import NavBar from './NavBar';
             username,optionTwo,optionOne, 
             optionOneVotes,optionTwoVotes,
             optionOnePercentage, optionTwoPercentage,
-            answered,question
+            answered,question,answer
          } = this.props
         if(question === undefined){
             return <NoMatch/>
@@ -88,13 +88,31 @@ import NavBar from './NavBar';
                                         <ProgressBar variant="success" now={optionOnePercentage} label={`${optionOnePercentage}%`}/>
                                     </Card.Body>
                                 </Card>
-                                <Card className='mt-4'>
+                                <Card className='mt-1'>
                                     <Card.Body>
                                         <Card.Title>{optionTwo}</Card.Title>
                                         <Card.Text>Number of Votes: {optionTwoVotes}</Card.Text>
                                         <ProgressBar variant="success" now={optionTwoPercentage} label={`${optionTwoPercentage}%`}/>
                                     </Card.Body>
                                     </Card>
+                                    {
+                                        answer === "optionOne" ? 
+                                        <Card>
+                                            <Card.Body>
+                                                <Card.Title>
+                                                    Your Choice is: <span className='text-info'>{optionOne}</span>
+                                                </Card.Title>
+                                            </Card.Body>
+                                        </Card> :
+                                        <Card>
+                                        <Card.Body>
+                                            <Card.Title>
+                                            Your Choice is: <span className='text-info'>{optionTwo}</span>
+                                            </Card.Title>
+                                        </Card.Body>
+                                    </Card> 
+
+                                    }
                              </>
                          )    
 
@@ -116,6 +134,7 @@ function mapStateToProps({authedUser, questions,users}, props){
     const total = optionOneVotes + optionTwoVotes
     const optionOnePercentage =  ((optionOneVotes/ total) * 100).toFixed(1)
     const optionTwoPercentage =  ((optionTwoVotes / total) * 100).toFixed(1);
+    const answer = users[authedUser].answers[id]
   return {
       id,
       avatar :questions[id] ? users[questions[id].author].avatarURL : null,
@@ -130,7 +149,8 @@ function mapStateToProps({authedUser, questions,users}, props){
       optionTwoVotes,
       optionOnePercentage,
       optionTwoPercentage,
-      userlogged :users[authedUser] 
+      userlogged :users[authedUser],
+      answer
      
   }
 }

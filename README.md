@@ -1,4 +1,5 @@
-## create React App 
+## install npm install
+## start the project npm start or yarn start 
 ## install ui liberary like React bootstrap and bootstrap.css
 ## install redux and reacr-redux redux-thunk;
 
