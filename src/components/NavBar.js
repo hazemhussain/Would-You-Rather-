@@ -2,13 +2,19 @@ import React, { Component } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {  clearAuthedUser } from '../actions/authedUser'
-
+import {  clearAuthedUser } from '../actions/authedUser';
+import { Redirect } from 'react-router-dom'
 
 class NavBar extends Component {
+    state = {
+        toHome : false
+    }
     logOut = (e)=> {
         e.preventDefault()
-        this.props.dispatch(  clearAuthedUser())
+        this.props.dispatch(clearAuthedUser(null))
+        return (
+            <Redirect to="/"/>
+        )
     }
     render() {
         return (
@@ -27,9 +33,9 @@ class NavBar extends Component {
                 <Nav.Item>
                     <Nav.Link as={Link} to='/questions'>Questions</Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link as={Link} to='/login'>Login</Nav.Link>
-                </Nav.Item>
+                { <Nav.Item>
+                    <Nav.Link as={Link} to='/users'>Users</Nav.Link>
+                </Nav.Item> }
                 <Nav.Item>
                     <Nav.Link onClick={this.logOut}>Logout</Nav.Link>
                 </Nav.Item>

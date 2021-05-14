@@ -3,8 +3,8 @@ import { Col, Container, Row, Button, ListGroup } from 'react-bootstrap';
 import NavBar from './NavBar';
 import {connect} from 'react-redux';
 import Question from './Question';
-import { ToastContainer } from 'react-toastify';
 import { Redirect } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
 
 
  
@@ -23,7 +23,7 @@ import { Redirect } from 'react-router-dom'
 
      render() {
 
-         if(!this.props.authedUser){ return <Redirect to='/login'/>}
+         if(!this.props.authedUser){ return <Redirect to='/'/>}
          return (
             <Container>
                 <Row className='mt-4'>
@@ -32,11 +32,11 @@ import { Redirect } from 'react-router-dom'
                             <NavBar/>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
-                            <ToastContainer/>
-                        </Col>
-                    </Row>
+                <Row>
+                 <Col>
+                    <ToastContainer/>
+                </Col>
+                </Row>
                     <Col className='mt-4'>
                         <Button className='bg-light text-info' onClick={this.handleAnsweredClick}>Answered Question</Button>
                         <Button className='m-2 bg-light text-info' onClick={this.handleUnansweredClick}>Unanswered Question</Button>

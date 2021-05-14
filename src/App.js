@@ -15,7 +15,6 @@ import QuestionDetails from './components/QuestionDetails';
 
 
 
-
  class App extends Component {
   componentDidMount(){
     this.props.dispatch(handleInitialData())
@@ -24,29 +23,35 @@ import QuestionDetails from './components/QuestionDetails';
     return (
       <Router>
       <Container>
-      {/* <LoadingBar style={{ backgroundColor: 'blue', height: '1px' }} /> */}
-          <Switch>
-           { !this.props.loggedinUser && <Route exact path='/' component={UsersDetails}/>}
-            <Route exact path='/login' component={LogIn} />
+      { !this.props.authedUser
+        ? <Switch>
+        <Route path="/" component={LogIn} />
+        </Switch>
+        : <>
+            <Switch>
+            <Route exact path='/' component={LogIn}/>
             <Route exact path='/leader-board' component={Leaderboard}/>
+            <Route exact path ='/users' component={UsersDetails}/>
             <Route exact path ='/questions' component= {Questions}/>
             <Route exact path='/questions/:id' component={QuestionDetails}/>
             <Route exact path ='/add' component= {NewPoll}/>
             <Route exact path = '/nomatch' component={NoMatch}/>
           </Switch>  
+          </>
+
+      }
       </Container>
       </Router>
     )
   }
 }
 
-
-
-function mapStateToProps({ autheduser }) {
-
+function mapStateToProps({authedUser}){
   return {
-    loggedinUser: autheduser === null
+    authedUser
   }
 }
+
+
 
 export default connect(mapStateToProps) (App);

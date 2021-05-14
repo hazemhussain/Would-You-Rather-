@@ -2,10 +2,20 @@ import React, { Component } from 'react'
 import { Container, Row, Col, ListGroup, Image } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
+import { Redirect} from 'react-router-dom'
 
 
 class Question extends Component {
+    
     render() {
+        if(!this.props.authedUser){ return <Redirect to={{
+            pathname:'/',
+            state: {
+                returnPath: `/questions`
+            }
+        }}     
+            />
+            }
         return (
             <Container>
                 <Row>

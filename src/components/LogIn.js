@@ -5,6 +5,7 @@ import { setAuthedUser  } from '../actions/authedUser';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Redirect } from 'react-router-dom'
 
 
 
@@ -13,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 class LogIn extends Component {
     state ={
         username:'',
+        toHome: false
     }
 
     handleChange = (e) => {
@@ -22,11 +24,12 @@ class LogIn extends Component {
     handleSubmit = (e)=> {
         e.preventDefault()
         this.props.dispatch(setAuthedUser(this.state.username))
-        this.props.history.push('/questions');
         toast.success(`welcome Back ${this.state.username}`)
-
+        this.setState({toHome:true})
+        // this.setState({username:''})
     }
      render() {
+         if(this.state.toHome){ return <Redirect to='/questions'/> }
          return (
             <Container>
                 <Row>
@@ -41,7 +44,7 @@ class LogIn extends Component {
                                 <option value="">Select a user...</option>
                                 { this.props.users.map(user => (<option key={user.id} value={user.id} >{user.name}</option>))}
                             </select>
-                            <button className=' btn btn-success rounded mt-3'>Login</button>
+                            <button className=' btn btn-success rounded mt-3' type='submit'>Login</button>
                             </div>
                         </form>
                     </Col>

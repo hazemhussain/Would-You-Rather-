@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Container, Row, Card, Form, Button, ProgressBar } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import NoMatch from './NoMatch';
 import { handleAddAnswer } from '../actions/questions';
 import LoadingBar from 'react-top-loading-bar'
@@ -29,14 +28,13 @@ import NavBar from './NavBar';
      }
     render() {
         const disabled = this.state.option === '' ? true : false
-        const { nomatch, authedUser, avatar,
+        const {avatar,
             username,optionTwo,optionOne, 
             optionOneVotes,optionTwoVotes,
             optionOnePercentage, optionTwoPercentage,
-            answered
+            answered,question
          } = this.props
-        if(!authedUser){ return <Redirect to='/login'/>}
-        if(nomatch){
+        if(question === undefined){
             return <NoMatch/>
         }
         return (
@@ -110,9 +108,8 @@ import NavBar from './NavBar';
 
 function mapStateToProps({authedUser, questions,users}, props){
     const { id } = props.match.params
-    if(questions[id]===undefined) return { nomatch : true }
-    const question = questions[id]
-    const user =  question ? users[questions[id].author] : null
+    if(questions[id]=== undefined) return { nomatch : true }
+    const question =  questions[id] ? questions[id] : null
     const answered = question ? (question.optionOne.votes.indexOf(authedUser) > -1 || question.optionTwo.votes.indexOf(authedUser) > -1) : null
     const optionOneVotes = (question && question.optionOne.votes) ? question.optionOne.votes.length : 0
     const optionTwoVotes =  (question && question.optionTwo.votes) ? question.optionTwo.votes.length : 0
@@ -121,8 +118,8 @@ function mapStateToProps({authedUser, questions,users}, props){
     const optionTwoPercentage =  ((optionTwoVotes / total) * 100).toFixed(1);
   return {
       id,
-      avatar : user.avatarURL,
-      username :user.name,
+      avatar :questions[id] ? users[questions[id].author].avatarURL : null,
+      username :questions[id] ? users[questions[id].author].name : null,
       optionOne:questions[id].optionOne.text,
       optionTwo:questions[id].optionTwo.text,
       total,
