@@ -5,9 +5,9 @@
 ## setup our redux with react - create redux store
 
 ## create our redux setup 
-- create action files
-- create reducer files
-- setup middleware 
+## create action files
+## create reducer files
+## setup middleware 
 
 
 ## install react router 
@@ -22,8 +22,8 @@
 
 ## create questions details component to show answered and answered questions
 
-- if answered we show results of the question 
-- if not we choose one option and save result 
+# if answered we show results of the question 
+# if not we choose one option and save result 
 
 ## create new question component to add new question 
 
